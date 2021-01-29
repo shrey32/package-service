@@ -17,7 +17,7 @@ public class Package {
 	private String id;
 	private String name, description;
 	private List<Product> products = new LinkedList<>();
-	private double totalPrice;
+	private double price;
 
 	public Package() {
 	}
@@ -65,12 +65,12 @@ public class Package {
 		this.products = products;
 	}
 
-	public double getTotalPrice() {
-		return totalPrice;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	@Override
