@@ -1,0 +1,13 @@
+<mat-toolbar class="app-navbar" color="primary">
+    <img mat-card-avatar class="app-angular-logo" src="{{logo}}">
+    <span>{{title}}</span>
+    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+
+    <div class="right">
+        <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="flex-end center">
+            <button mat-button>
+      <mat-icon matBadge="{{packageCountInBasket}}" hidden="{{packageCountInBasket<=0}}" matBadgeColor="accent">shopping_cart</mat-icon>
+      </button>
+        </div>
+    </div>
+</mat-toolbar>
