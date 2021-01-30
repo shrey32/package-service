@@ -1,4 +1,4 @@
-package com.jagex.packageservice.config;
+package com.shrey.packageservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

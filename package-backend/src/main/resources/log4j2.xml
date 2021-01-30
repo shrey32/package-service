@@ -34,7 +34,7 @@
 			<AppenderRef ref="RollingFile" />
 		</Root>
 
-		<Logger name="com.jagex.packageservice" level="trace"></Logger>
+		<Logger name="com.shrey.packageservice" level="trace"></Logger>
 	</Loggers>
 
 </Configuration>

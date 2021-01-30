@@ -1,4 +1,4 @@
-package com.jagex.packageservice.controller;
+package com.shrey.packageservice.controller;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +10,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.jagex.packageservice.pojo.Package;
-import com.jagex.packageservice.pojo.PackageResponse;
+import com.shrey.packageservice.pojo.Package;
+import com.shrey.packageservice.pojo.PackageResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package com.jagex.packageservice.controller;
+package com.shrey.packageservice.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jagex.packageservice.pojo.Package;
-import com.jagex.packageservice.pojo.PackageResponse;
-import com.jagex.packageservice.service.PackageService;
+import com.shrey.packageservice.pojo.Package;
+import com.shrey.packageservice.pojo.PackageResponse;
+import com.shrey.packageservice.service.PackageService;
 
 @RestController()
 @RequestMapping("/package")

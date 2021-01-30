@@ -1,4 +1,4 @@
-package com.jagex.packageservice.pojo;
+package com.shrey.packageservice.pojo;
 
 import java.util.List;
 

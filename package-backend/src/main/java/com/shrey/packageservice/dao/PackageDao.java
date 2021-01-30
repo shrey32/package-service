@@ -1,16 +1,16 @@
-package com.jagex.packageservice.service;
+package com.shrey.packageservice.dao;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.jagex.packageservice.pojo.Package;
+import com.shrey.packageservice.pojo.Package;
 
 /**
  * 
  * @author Shrey
  *
  */
-public interface PackageService {
+public interface PackageDao {
 
 	Optional<Package> create(Optional<Package> optionalPkg);
 

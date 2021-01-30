@@ -1,15 +1,16 @@
-package com.jagex.packageservice.store;
+package com.shrey.packageservice.store;
 
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.shrey.packageservice.pojo.Package;
+import com.shrey.packageservice.pojo.Product;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.jagex.packageservice.pojo.Package;
-import com.jagex.packageservice.pojo.Product;
 
 /**
  * 

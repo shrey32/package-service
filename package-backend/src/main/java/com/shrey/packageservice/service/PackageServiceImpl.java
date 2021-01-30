@@ -1,4 +1,4 @@
-package com.jagex.packageservice.service;
+package com.shrey.packageservice.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jagex.packageservice.dao.PackageDao;
-import com.jagex.packageservice.pojo.Package;
+import com.shrey.packageservice.dao.PackageDao;
+import com.shrey.packageservice.pojo.Package;
 
 @Service
 public class PackageServiceImpl implements PackageService {

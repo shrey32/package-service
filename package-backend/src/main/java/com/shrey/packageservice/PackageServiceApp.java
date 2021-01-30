@@ -1,4 +1,4 @@
-package com.jagex.packageservice;
+package com.shrey.packageservice;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
