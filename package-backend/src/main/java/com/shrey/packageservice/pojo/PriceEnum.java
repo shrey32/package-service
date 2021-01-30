@@ -7,7 +7,7 @@ package com.shrey.packageservice.pojo;
  */
 public enum PriceEnum {
 
-	USD("usd"), EURO("euro"), POUND("pound");
+	USD("USD"), EURO("EUR"), GBP("GBP");
 
 	private String type;
 
