@@ -19,6 +19,7 @@ import { PackageDialogComponent } from './components/dialog/info/package-dialog.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CurrencyExchangeService } from './services/currency-exchange.service';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CurrencyExchangeService } from './services/currency-exchange.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSortModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ShoppingBasketService, PackageService, ProductService, DialogService, CurrencyExchangeService],

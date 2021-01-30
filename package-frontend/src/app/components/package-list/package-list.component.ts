@@ -1,6 +1,5 @@
 import { PriceType } from './../../enum/pricetype.enum';
 import { ShoppingBasketService } from './../../services/shopping-basket.service';
-import { ActionListener } from './../../models/action.listener';
 import { DialogService } from './../../services/dialog.service';
 import { AfterViewInit, Component, EventEmitter, OnInit, ViewChild } from "@angular/core";
 import { MatSort } from "@angular/material/sort";
@@ -8,7 +7,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Package } from "src/app/models/package.model";
 import { PackageService } from "src/app/services/package.service";
 import { CurrencyExchangeService } from 'src/app/services/currency-exchange.service';
-import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-package-list',
@@ -18,8 +16,8 @@ import { getCurrencySymbol } from '@angular/common';
 export class PackageListComponent implements OnInit, AfterViewInit {
 
   packages: Package[] = [];
+  dataSource;
   displayedColumns: string[] = ['id', 'name', 'description', 'price', 'details', 'add'];
-  dataSource = new MatTableDataSource(this.packages);
   currencyList: PriceType[] = [PriceType.USD, PriceType.EUR, PriceType.GBP];
   selectedCurrencyType = PriceType.USD;
 
@@ -31,6 +29,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.fetchList();
+    this.dataSource = new MatTableDataSource(this.packages);
   }
 
   ngAfterViewInit() {
@@ -39,12 +38,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    let filtered = this.packages;
-    if (filterValue.trim() !== '') {
-      filtered = this.packages.filter(p => p.name === filterValue || p.description === filterValue || p.price + '' === filterValue);
-    }
-    if (filtered.length > 0)
-      this.dataSource.filteredData = filtered;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   fetchList() {
@@ -94,11 +88,11 @@ export class PackageListComponent implements OnInit, AfterViewInit {
         const rate: number = obj.rates[pkg.priceType];
         let total: number = 0;
         for (let prod of pkg.products) {
-          prod.price = parseFloat((prod.price / rate).toPrecision(2));
+          prod.price = prod.price / rate;
           prod.priceType = this.selectedCurrencyType;
           total += prod.price;
         }
-        pkg.price = parseFloat(total.toPrecision(2));
+        pkg.price = total;
         pkg.priceType = this.selectedCurrencyType;
       }
     });
