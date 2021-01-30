@@ -1,11 +1,11 @@
 # package-service
 Simple Shopping Application. Backend is Spring-Boot microservice, and Frontend is Angular-Material UI
 
-![alt text](screenshot1.png)
+![alt text](screenshot1.PNG)
 
-![alt text](screenshot2.png)
+![alt text](screenshot2.PNG)
 
-![alt text](screenshot3.png)
+![alt text](screenshot3.PNG)
 
 ## Setup Backend
 import `package-backend` in eclipse and Run `PackageServiceApp.java` to start microservice. 
