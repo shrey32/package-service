@@ -21,6 +21,17 @@ export class ShoppingBasketService {
     this.onAdd.emit(pkg);
   }
 
+  deletePackage = (pkgId: string): void => {
+    let index = 0;
+    for (let pkg of this.packages) {
+      if (pkgId === pkg.id) {
+        this.packages.splice(index, 1);
+      }
+      index++;
+    }
+    this.onAdd.emit(null);
+  }
+
   packageListener = (): EventEmitter<Package> => {
     return this.onAdd;
   }

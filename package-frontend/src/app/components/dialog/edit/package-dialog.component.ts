@@ -1,7 +1,7 @@
-import { ProductService } from './../../../services/product.service';
-import { Product } from './../../../models/product.model';
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Product } from "src/app/models/product.model";
 
 @Component({
   selector: "app-package-dialog",
@@ -12,19 +12,16 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class PackageDialogComponent implements OnInit {
 
 
-  private products: Product[] = [];
+  columns: string[] = ['no', 'name', 'price'];
+  products: Product[] = [];
+  dataSource = new MatTableDataSource(this.products);;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public productService: ProductService) {
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.products = data.package.products;
   }
 
   ngOnInit(): void {
-    if (this.data === null) {
 
-    }
-    this.productService.getProducts().subscribe((products: Product[]) => {
-      this.products = products;
-    });
   }
 
 }

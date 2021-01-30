@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>My Shopping Basket</h2>
+<mat-dialog-content>
+    <table mat-table [dataSource]="displayList">
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let basketObj; let i=index"> {{i+1}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let basketObj;"> {{basketObj.name}} </td>
+            <td mat-footer-cell *matFooterCellDef><b>{{getTotalLabel()}}</b> </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let basketObj;"> {{basketObj.price | currency}} </td>
+            <td mat-footer-cell *matFooterCellDef><b>{{getTotalCost()}}</b> </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity. </th>
+            <td mat-cell *matCellDef="let basketObj;"> {{basketObj.count}} </td>
+            <td mat-footer-cell *matFooterCellDef><b>{{packageCountInBasket()}}</b> </td>
+        </ng-container>
+        <ng-container matColumnDef="remove">
+            <th mat-header-cell *matHeaderCellDef> Remove </th>
+            <td mat-cell *matCellDef="let basketObj"> <button mat-button color="primary" (click)="delete(basketObj.id)"><mat-icon>delete</mat-icon></button> </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="columns"></tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button color="primary" (click)="checkout()">Checkout</button>
+</mat-dialog-actions>

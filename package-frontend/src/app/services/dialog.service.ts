@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../components/dialog/alert/alert-dialog.component';
 import { Package } from '../models/package.model';
 import { PackageDialogComponent } from '../components/dialog/edit/package-dialog.component';
+import { ShoppingBasketComponent } from '../components/dialog/shopping-basket/shopping-basket.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,17 @@ export class DialogService {
     });
   }
 
-  packageDialog = (pkg: Package, title: string, packageEmitter?: EventEmitter<any>) => {
+  packageDialog = (title: string, pkg: Package, packageEmitter?: EventEmitter<Package>) => {
     const config: any = { title: title, package: pkg };
-    const dialogRef = this.dialog.open(PackageDialogComponent, { data: config });
+    const dialogRef = this.dialog.open(PackageDialogComponent, { width: '40%', data: config });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true && packageEmitter)
         packageEmitter.emit(null);
     });
   }
 
+  shoppingBasketView = () => {
+    this.dialog.open(ShoppingBasketComponent, { width: '60%' });
+  }
 
 }

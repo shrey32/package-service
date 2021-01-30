@@ -1,9 +1,9 @@
-<table mat-table [dataSource]="packages" matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="packages" matSort>
 
     <!-- Position Column -->
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let pkg"> {{pkg.id}} </td>
+        <td mat-cell *matCellDef="let pkg; let i=index"> {{i+1}} </td>
     </ng-container>
 
     <!-- Name Column -->
@@ -21,7 +21,7 @@
     <!-- Price Column -->
     <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-        <td mat-cell *matCellDef="let pkg"> {{pkg.price}} </td>
+        <td mat-cell *matCellDef="let pkg"> {{pkg.price | currency}} </td>
     </ng-container>
 
     <!-- Details Column -->

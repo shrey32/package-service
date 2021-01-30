@@ -1,3 +1,4 @@
+import { DialogService } from './../../services/dialog.service';
 import { Package } from './../../models/package.model';
 import { ShoppingBasketService } from './../../services/shopping-basket.service';
 import { Component, OnInit } from "@angular/core";
@@ -9,11 +10,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class HeaderComponent implements OnInit {
 
-  title: string = 'Jagex Package Service'
+  title: string = 'Package Service'
   logo: string = '../../assets/app-logo.jpg'
   packageCountInBasket: number = 0;
 
-  constructor(public shoppingBasketService: ShoppingBasketService) {
+  constructor(public shoppingBasketService: ShoppingBasketService, public dialogService: DialogService) {
 
   }
 
@@ -22,4 +23,9 @@ export class HeaderComponent implements OnInit {
       this.packageCountInBasket = this.shoppingBasketService.getPackages().length;
     });
   }
+
+  openBasketView = (): void => {
+    this.dialogService.shoppingBasketView();
+  }
+
 }

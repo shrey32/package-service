@@ -53,12 +53,22 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     this.dialogService.actionDialog("Action", "Do you really want to delete this " + pkg.name + "?", deleteEmitter);
   }
 
+  /**
+   *
+   */
   addToBasket(pkg: Package) {
     this.shoppingBasketService.addPackage(pkg);
   }
 
+  /**
+   *
+   */
   details(pkg: Package) {
-    this.dialogService.packageDialog(pkg, "Details");
+    let packageEmitter: EventEmitter<Package> = new EventEmitter<Package>();
+    this.dialogService.packageDialog('Package Info', pkg, packageEmitter);
+    packageEmitter.subscribe((pg: Package) => {
+      this.addToBasket(pkg);
+    });
   }
 
 }
