@@ -40,5 +40,4 @@ export class ShoppingBasketService {
     return this.packages;
   }
 
-
 }

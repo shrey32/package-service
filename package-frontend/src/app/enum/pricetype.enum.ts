@@ -1,5 +1,5 @@
 export enum PriceType {
 
-  USD = 'usd', EURO = 'euro', POUND = 'pound'
+  USD = 'USD', EUR = 'EUR', GBP = 'GBP'
 
 }

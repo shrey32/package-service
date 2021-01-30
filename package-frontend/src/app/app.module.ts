@@ -15,7 +15,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PackageService } from './services/package.service';
-import { PackageDialogComponent } from './components/dialog/edit/package-dialog.component';
+import { PackageDialogComponent } from './components/dialog/info/package-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { CurrencyExchangeService } from './services/currency-exchange.service';
 
 @NgModule({
   declarations: [
@@ -32,10 +35,13 @@ import { PackageDialogComponent } from './components/dialog/edit/package-dialog.
     BrowserModule,
     AngularMaterialModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ShoppingBasketService, PackageService, ProductService, DialogService],
+  providers: [ShoppingBasketService, PackageService, ProductService, DialogService, CurrencyExchangeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

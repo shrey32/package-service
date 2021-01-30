@@ -13,7 +13,7 @@
         </ng-container>
         <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let basketObj;"> {{basketObj.price | currency}} </td>
+            <td mat-cell *matCellDef="let basketObj;"> {{basketObj.price | currency : basketObj.type}} </td>
             <td mat-footer-cell *matFooterCellDef><b>{{getTotalCost()}}</b> </td>
         </ng-container>
         <ng-container matColumnDef="quantity">

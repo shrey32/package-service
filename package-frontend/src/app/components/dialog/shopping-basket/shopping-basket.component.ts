@@ -1,6 +1,8 @@
+import { getCurrencySymbol } from "@angular/common";
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
+import { PriceType } from "src/app/enum/pricetype.enum";
 import { Package } from "src/app/models/package.model";
 import { ShoppingBasketService } from "src/app/services/shopping-basket.service";
 
@@ -54,7 +56,8 @@ export class ShoppingBasketComponent implements OnInit {
         pos: index,
         name: pkg.name,
         count: count,
-        price: pkg.price
+        price: pkg.price,
+        type: pkg.priceType
       }
       this.displayList.push(basketObj);
       index++;
@@ -74,13 +77,21 @@ export class ShoppingBasketComponent implements OnInit {
       total += obj.price;
     }
     let discount = 0;
+    const curr = this.getCurrencySymbol(this.packages.length > 1 ? this.packages[0].priceType : PriceType.USD);
     if (this.packages.length > 1) {//apply 10% discount
       discount = this.getDiscount(total);
-      return "$" + total + " - $" + discount + " = " + "$" + (total - discount);
+      return curr + total + " - " + curr + discount + " = " + curr + (total - discount);
     } else {
-      return "$" + total;
+      return curr + total;
     }
   }
+
+  getCurrencySymbol(priceType: PriceType): string {
+    if (!priceType)
+      priceType = PriceType.USD;
+    return getCurrencySymbol(priceType.toString(), "wide");
+  }
+
 
   getTotalLabel(): string {
     if (this.packages.length > 1) {

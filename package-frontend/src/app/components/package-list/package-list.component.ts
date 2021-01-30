@@ -1,3 +1,4 @@
+import { PriceType } from './../../enum/pricetype.enum';
 import { ShoppingBasketService } from './../../services/shopping-basket.service';
 import { ActionListener } from './../../models/action.listener';
 import { DialogService } from './../../services/dialog.service';
@@ -6,6 +7,8 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Package } from "src/app/models/package.model";
 import { PackageService } from "src/app/services/package.service";
+import { CurrencyExchangeService } from 'src/app/services/currency-exchange.service';
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-package-list',
@@ -17,10 +20,12 @@ export class PackageListComponent implements OnInit, AfterViewInit {
   packages: Package[] = [];
   displayedColumns: string[] = ['id', 'name', 'description', 'price', 'details', 'add'];
   dataSource = new MatTableDataSource(this.packages);
+  currencyList: PriceType[] = [PriceType.USD, PriceType.EUR, PriceType.GBP];
+  selectedCurrencyType = PriceType.USD;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public shoppingBasketService: ShoppingBasketService, public packageService: PackageService, public dialogService: DialogService) {
+  constructor(public shoppingBasketService: ShoppingBasketService, public packageService: PackageService, public dialogService: DialogService, public currencyExhangeService: CurrencyExchangeService) {
 
   }
 
@@ -30,6 +35,16 @@ export class PackageListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    let filtered = this.packages;
+    if (filterValue.trim() !== '') {
+      filtered = this.packages.filter(p => p.name === filterValue || p.description === filterValue || p.price + '' === filterValue);
+    }
+    if (filtered.length > 0)
+      this.dataSource.filteredData = filtered;
   }
 
   fetchList() {
@@ -68,6 +83,24 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     this.dialogService.packageDialog('Package Info', pkg, packageEmitter);
     packageEmitter.subscribe((pg: Package) => {
       this.addToBasket(pkg);
+    });
+  }
+
+  onCurrencyChange = (): void => {
+    this.currencyExhangeService.getExchangeRatesFor(this.selectedCurrencyType).subscribe((obj: any) => {
+      for (let pkg of this.packages) {
+        if (!pkg.priceType)
+          pkg.priceType = PriceType.USD;
+        const rate: number = obj.rates[pkg.priceType];
+        let total: number = 0;
+        for (let prod of pkg.products) {
+          prod.price = parseFloat((prod.price / rate).toPrecision(2));
+          prod.priceType = this.selectedCurrencyType;
+          total += prod.price;
+        }
+        pkg.price = parseFloat(total.toPrecision(2));
+        pkg.priceType = this.selectedCurrencyType;
+      }
     });
   }
 

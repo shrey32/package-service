@@ -4,7 +4,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '../components/dialog/alert/alert-dialog.component';
 import { Package } from '../models/package.model';
-import { PackageDialogComponent } from '../components/dialog/edit/package-dialog.component';
+import { PackageDialogComponent } from '../components/dialog/info/package-dialog.component';
 import { ShoppingBasketComponent } from '../components/dialog/shopping-basket/shopping-basket.component';
 
 @Injectable({
