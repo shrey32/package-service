@@ -17,7 +17,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
 
   packages: Package[] = [];
   dataSource;
-  displayedColumns: string[] = ['id', 'name', 'description', 'price', 'details', 'add'];
+  displayedColumns: string[] = ['id', 'name', 'description', 'price', 'details', 'edit', 'delete', 'add'];
   currencyList: PriceType[] = [PriceType.USD, PriceType.EUR, PriceType.GBP];
   selectedCurrencyType = PriceType.USD;
 
@@ -47,6 +47,24 @@ export class PackageListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   *
+   */
+  createCustomPackage = (): void => {
+    const createEmitter: EventEmitter<any> = new EventEmitter<any>();
+    createEmitter.subscribe((pkg: Package) => {
+      this.packageService.create(pkg).subscribe((p: any) => {
+        this.dialogService.alertDialog('Success', 'Package Created and Added to the Basket.');
+        this.packages.push(p.pkg);
+        this.addToBasket(p.pkg);
+        this.dataSource = new MatTableDataSource(this.packages);
+      }, error => {
+        this.dialogService.alertDialog('Error while creating Package', error);
+      });
+    });
+    this.dialogService.createPackageDialog('Create Custom Package',null,createEmitter);
+  }
+
   delete(pkg: Package) {
     let deleteEmitter: EventEmitter<any> = new EventEmitter<any>();
     deleteEmitter.subscribe(data => {
@@ -60,6 +78,10 @@ export class PackageListComponent implements OnInit, AfterViewInit {
       });
     });
     this.dialogService.actionDialog("Action", "Do you really want to delete this " + pkg.name + "?", deleteEmitter);
+  }
+
+  edit(pkg: Package) {
+
   }
 
   /**

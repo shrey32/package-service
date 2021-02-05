@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-content class="mat-typography">
+    <div fxLayout="column">
+        <mat-form-field style="width:70%;">
+            <mat-label>Name</mat-label>
+            <input matInput maxlength="30" placeholder="War Package..." [(ngModel)]="data.package.name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput maxlength="256" placeholder="Ex. War Package to give ability..." [(ngModel)]="data.package.description"></textarea>
+            <mat-hint align="end">{{data.package.description.length}} / 256</mat-hint>
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="products">
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="onChange($event.checked)">
+                </mat-checkbox>
+            </th>
+
+            <td mat-cell *matCellDef="let prod">
+                <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="prod.select" (change)="prod.select=$event.checked">
+                </mat-checkbox>
+            </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+        <!-- No Column -->
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let prod; let i=index"> {{i+1}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Product Name </th>
+            <td mat-cell *matCellDef="let prod"> {{prod.name}} </td>
+            <td mat-footer-cell *matFooterCellDef><b>Total </b></td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let prod"> {{prod.usdPrice | currency :data.package.priceType}} </td>
+            <td mat-footer-cell *matFooterCellDef> <b>{{getTotalPriceForSelected() | currency :data.package.priceType}}</b> </td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+            <td mat-cell *matCellDef="let prod"><input matInput type="number" min="1" max="5" [(ngModel)]="prod.quantity"></td>
+            <td mat-footer-cell *matFooterCellDef><b>{{getTotalQuantity()}}</b></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="columns"></tr>
+    </table>
+
+</mat-dialog-content>
+<div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button color="primary" [mat-dialog-close]="exportData" cdkFocusInitial>Create & Add to basket</button>
+</div>

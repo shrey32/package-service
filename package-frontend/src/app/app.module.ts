@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CurrencyExchangeService } from './services/currency-exchange.service';
 import { MatSortModule } from '@angular/material/sort';
+import { CreatePackageDialogComponent } from './components/dialog/create/create-package-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatSortModule } from '@angular/material/sort';
     AlertDialogComponent,
     ActionDialogComponent,
     PackageDialogComponent,
-    ShoppingBasketComponent
+    ShoppingBasketComponent,
+    CreatePackageDialogComponent
   ],
   imports: [
     BrowserModule,

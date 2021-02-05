@@ -6,6 +6,7 @@ import { AlertDialogComponent } from '../components/dialog/alert/alert-dialog.co
 import { Package } from '../models/package.model';
 import { PackageDialogComponent } from '../components/dialog/info/package-dialog.component';
 import { ShoppingBasketComponent } from '../components/dialog/shopping-basket/shopping-basket.component';
+import { CreatePackageDialogComponent } from '../components/dialog/create/create-package-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,9 @@ export class DialogService {
     });
   }
 
+  /**
+   *
+   */
   packageDialog = (title: string, pkg: Package, packageEmitter?: EventEmitter<Package>) => {
     const config: any = { title: title, package: pkg };
     const dialogRef = this.dialog.open(PackageDialogComponent, { width: '40%', data: config });
@@ -35,6 +39,19 @@ export class DialogService {
       if (result === true && packageEmitter)
         packageEmitter.emit(null);
     });
+  }
+
+  /**
+   *
+   */
+  createPackageDialog = (title: string, pkg?: Package, createEmitter?: EventEmitter<Package>) => {
+    const config: any = { title: title, package: pkg };
+    const dialogRef = this.dialog.open(CreatePackageDialogComponent, { width: '40%', data: config });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data.result === true && createEmitter)
+        createEmitter.emit(data.package);
+    });
+
   }
 
   shoppingBasketView = () => {

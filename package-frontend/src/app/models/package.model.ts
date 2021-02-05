@@ -7,5 +7,6 @@ export class Package {
   description: string = '';
   price: number = 0;
   products: Product[] = [];
+  mine:boolean = false;
   priceType: PriceType = PriceType.USD;
 }

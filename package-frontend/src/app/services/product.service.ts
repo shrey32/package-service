@@ -15,10 +15,13 @@ export class ProductService {
 
 
   getProducts = (): Observable<Product[]> => {
-    const headers: HttpHeaders = new HttpHeaders();
-    headers.append("username", "user");
-    headers.append("Authorization", "Basic dXNlcjpwYXNz");
-    return this.http.get<Product[]>(this.baseURL, { headers: headers }).pipe(
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic ' + btoa('user:pass')
+      })
+    };
+    return this.http.get<Product[]>(this.baseURL, httpOptions).pipe(
       tap( // Log the result or error
         data => console.log(data),
         error => console.error(error)
