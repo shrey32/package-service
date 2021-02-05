@@ -18,6 +18,8 @@ public class Package {
 	private String name, description;
 	private List<Product> products = new LinkedList<>();
 	private double price;
+	private boolean mine = false;
+	private PriceEnum priceType = PriceEnum.USD;
 
 	public Package() {
 	}
@@ -71,6 +73,22 @@ public class Package {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public boolean isMine() {
+		return mine;
+	}
+
+	public void setMine(boolean mine) {
+		this.mine = mine;
+	}
+
+	public PriceEnum getPriceType() {
+		return priceType;
+	}
+
+	public void setPriceType(PriceEnum priceType) {
+		this.priceType = priceType;
 	}
 
 	@Override
