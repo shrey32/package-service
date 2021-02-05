@@ -1,8 +1,8 @@
+import { Package } from './../../../models/package.model';
 import { ProductService } from './../../../services/product.service';
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Package } from "src/app/models/package.model";
 import { Product } from "src/app/models/product.model";
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -20,29 +20,45 @@ export class CreatePackageDialogComponent implements OnInit {
   dataSource = new MatTableDataSource(this.products);
   selection = new SelectionModel<Product>(true, []);
   exportData: any = { result: false }
+  buttonLabel: string = '';
+  copiedPackage: any = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public productService: ProductService) {
     if (!data.package) {
       data.package = new Package();
       data.package.mine = true;
+      this.buttonLabel = 'Create & Add To Basket';
     } else {
-      this.products = data.package.products;
+      this.buttonLabel = 'Update & Add To Basket';
+      this.copiedPackage = JSON.parse(JSON.stringify(data.package));
     }
     this.exportData = { result: true, package: data.package };
   }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(products => {
-      this.products = products;
-      this.products.forEach(prod => prod.quantity = 1);
-      this.onChange(false);
+    this.productService.getProducts().subscribe(prods => {
+      this.products = prods;
+      for (let prod of this.products) {
+        if (this.copiedPackage.products.length <= 0) { //create new package
+          prod.quantity = 1;
+          this.onSelect(prod, false);
+        } else { //edit package
+          const count = this.copiedPackage.products.filter(p => (prod.id === p.id)).length
+          prod.quantity = count === 0 ? 1 : count;
+          this.onSelect(prod, count === 0 ? false : true);
+        }
+      }
     });
   }
 
-  onChange = (checked: boolean): void => {
+  onSelectAll = (checked: boolean): void => {
     this.products.forEach(prod => {
-      prod.select = checked;
+      this.onSelect(prod, checked);
     });
+  }
+
+  onSelect = (prod: any, checked: boolean): void => {
+    prod.select = checked
   }
 
   getTotalPriceForSelected() {
@@ -56,7 +72,7 @@ export class CreatePackageDialogComponent implements OnInit {
           product.id = prod.id;
           product.price = prod.usdPrice;
           product.name = prod.name;
-          product.name = this.data.package.priceType;
+          product.priceType = this.data.package.priceType;
           this.data.package.products.push(product);
         }
       }

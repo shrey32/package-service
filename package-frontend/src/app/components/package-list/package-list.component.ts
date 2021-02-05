@@ -62,7 +62,7 @@ export class PackageListComponent implements OnInit, AfterViewInit {
         this.dialogService.alertDialog('Error while creating Package', error);
       });
     });
-    this.dialogService.createPackageDialog('Create Custom Package',null,createEmitter);
+    this.dialogService.createPackageDialog('Create Custom Package', null, createEmitter);
   }
 
   delete(pkg: Package) {
@@ -81,7 +81,22 @@ export class PackageListComponent implements OnInit, AfterViewInit {
   }
 
   edit(pkg: Package) {
-
+    const editEmitter: EventEmitter<any> = new EventEmitter<any>();
+    editEmitter.subscribe((updatedPkg: Package) => {
+      if (JSON.stringify(pkg) == JSON.stringify(updatedPkg)) {
+        this.addToBasket(updatedPkg);
+        return;
+      }
+      this.packageService.update(pkg).subscribe((p: any) => {
+        this.dialogService.alertDialog('Success', 'Package Updated and Added to the Basket.');
+        this.packages.push(p.pkg);
+        this.addToBasket(p.pkg);
+        this.dataSource = new MatTableDataSource(this.packages);
+      }, error => {
+        this.dialogService.alertDialog('Error while updating Package', error);
+      });
+    });
+    this.dialogService.createPackageDialog('Edit Package', pkg, editEmitter);
   }
 
   /**
