@@ -66,13 +66,13 @@ public class PackageController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<PackageResponse> delete(@PathVariable String id) {
+	public ResponseEntity<Boolean> delete(@PathVariable String id) {
 		boolean isDeleted = packageService.delete(id);
 
 		if (isDeleted) {
-			return new ResponseEntity<PackageResponse>(HttpStatus.OK);
+			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<PackageResponse>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
 		}
 	}
 
